@@ -1,22 +1,22 @@
 import { SyntheticEvent, useState } from 'react';
 import * as Styled from './ListItem.styled';
-import { Todo } from './List';
+import { Item } from './List';
 
-interface ListItemProps {
-  todoItem: Todo;
-  onUpdateItem(item: Todo): void;
-  onDeleteItem(item: Todo): void;
+export interface ListItemProps {
+  listItem: Item;
+  onUpdateItem(item: Item): void;
+  onDeleteItem(item: Item): void;
 }
 
-const ListItem = ({ todoItem, ...props }: ListItemProps) => {
-  const [currValue, setCurrValue] = useState(todoItem.title);
-  const [isEditing, setIsEditing] = useState(!Boolean(todoItem.title));
-  const [isChecked, setChecked] = useState(todoItem.completed);
+const ListItem = ({ listItem, ...props }: ListItemProps) => {
+  const [currValue, setCurrValue] = useState(listItem.title);
+  const [isEditing, setIsEditing] = useState(!Boolean(listItem.title));
+  const [isChecked, setChecked] = useState(listItem.completed);
 
   const onSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
     props.onUpdateItem({
-      ...todoItem,
+      ...listItem,
       title: currValue,
     });
     setIsEditing(false);
@@ -26,7 +26,7 @@ const ListItem = ({ todoItem, ...props }: ListItemProps) => {
     const newValue = !isChecked;
     setChecked(newValue);
     props.onUpdateItem({
-      ...todoItem,
+      ...listItem,
       completed: newValue,
     });
   };
@@ -35,15 +35,15 @@ const ListItem = ({ todoItem, ...props }: ListItemProps) => {
     <Styled.FlexDiv>
       <Styled.Form id="form" onSubmit={onSubmit} tabIndex={0}>
         <Styled.CheckBox
-          id="checkbox"
+          id="itemCheckBox"
           type="checkbox"
-          name="todoItemBox"
+          name="itemBox"
           defaultChecked={isChecked}
           onClick={onCheckboxChange}
         />
         {isEditing && !isChecked ? (
           <Styled.Input
-            name="todoItem"
+            name="listItem"
             autoFocus
             value={currValue}
             onBlur={onSubmit}
@@ -53,13 +53,13 @@ const ListItem = ({ todoItem, ...props }: ListItemProps) => {
           />
         ) : (
           <Styled.Span isChecked={isChecked} onClick={() => setIsEditing(true)}>
-            {todoItem.title}
+            {listItem.title}
           </Styled.Span>
         )}
-        {Boolean(todoItem.title) && (
+        {Boolean(listItem.title) && (
           <Styled.IconButton type="button">
             <Styled.IconSpan
-              onClick={() => props.onDeleteItem(todoItem)}
+              onClick={() => props.onDeleteItem(listItem)}
               className="material-icons"
             >
               delete
