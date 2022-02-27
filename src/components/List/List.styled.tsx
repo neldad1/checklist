@@ -7,7 +7,7 @@ const MainDiv = styled.div`
   margin: 10% auto;
   height: 75vh;
 
-  width: 75vw;
+  width: 50vw;
   font-size: 1.25em;
   overflow-y: scroll;
   // reset and fill the entire screen
