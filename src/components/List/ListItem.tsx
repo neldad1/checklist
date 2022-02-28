@@ -35,15 +35,16 @@ const ListItem = ({ listItem, ...props }: ListItemProps) => {
     <Styled.FlexDiv>
       <Styled.Form id="form" onSubmit={onSubmit} tabIndex={0}>
         <Styled.CheckBox
-          id="itemCheckBox"
+          data-testid="itemCheckBox"
+          name="itemCheckBox"
           type="checkbox"
-          name="itemBox"
           defaultChecked={isChecked}
           onClick={onCheckboxChange}
         />
         {isEditing && !isChecked ? (
           <Styled.Input
-            name="listItem"
+            data-testid="itemInput"
+            name="itemInput"
             autoFocus
             value={currValue}
             onBlur={onSubmit}
@@ -52,12 +53,17 @@ const ListItem = ({ listItem, ...props }: ListItemProps) => {
             }
           />
         ) : (
-          <Styled.Span isChecked={isChecked} onClick={() => setIsEditing(true)}>
+          <Styled.Span
+            data-testid="itemSpan"
+            data-checked={isChecked}
+            isChecked={isChecked}
+            onClick={() => setIsEditing(true)}
+          >
             {listItem.title}
           </Styled.Span>
         )}
         {Boolean(listItem.title) && (
-          <Styled.IconButton type="button">
+          <Styled.IconButton data-testid="itemButton" type="button">
             <Styled.IconSpan
               onClick={() => props.onDeleteItem(listItem)}
               className="material-icons"
